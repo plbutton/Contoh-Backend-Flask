@@ -1,3 +1,4 @@
+from crypt import methods
 import sqlite3
 from flask import Flask, request
 
@@ -63,3 +64,18 @@ def signup():
   insert_query = f"""
 INSERT INTO {username} {password}
 """ 
+
+@app.route('/highscore', methods=['POST'])
+def insert_highscore():
+  body = request.json
+
+  highscore = body['highscore']
+  username = body['username']
+
+  update_query = f"""
+UPDATE players
+SET 
+  highscore = {highscore}
+WHERE
+  username = {username}
+"""
